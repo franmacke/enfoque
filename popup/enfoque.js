@@ -1,31 +1,40 @@
 const KEY_DOMINIOS_BLOQUEADOS = 'dominiosBloqueados'
 const DEBUG = true
+var estado = false
 
 document.addEventListener('DOMContentLoaded', () => {
     let agregadoRapido = botonAgregadoRapido()
     agregadoRapido.addEventListener('click', handleAgregadoRapido)
 
+
+    let toggle = toggleSwitch()
+    toggle.addEventListener('click', handleToggleSwitch)
+
     renderListaDominios()
 })
 
+async function handleToggleSwitch() {
+    const estado = await enviarMensaje('TOGGLE')
+    console.log('nuevo estado: ', estado)
+    return estado
+}
+
+async function getToggle() {
+    return await enviarMensaje('STATE')
+}
+
 async function handleAgregadoRapido() {
     addDominiosBloqueados(await getPestaniaActiva())
+        .catch()
     await renderListaDominios()
 }
 
 async function renderListaDominios() {
     let lista = await getDominiosBloqueados()
+    listaHTML = lista.map(dominio => { return `<h3> ${dominio} </h3>` }).join('')
 
-    console.log(lista)
-
-    lista.map(dominio => {
-        `
-            <h3> ${dominio} </h3>
-        `
-    })
-
-    const elemento = listaDominios()
-    elemento.innerHTML = lista
+    const elemento = document.querySelector('#lista-dominios')
+    elemento.innerHTML = listaHTML
 }
 
 async function getPestaniaActiva() {
@@ -39,6 +48,7 @@ async function getPestaniaActiva() {
 
 async function addDominiosBloqueados(dominio) {
     const dominiosBloqueados = await enviarMensaje('POST', dominio)
+        .catch(error => renderError(error))
     // console.log('POPUP DB: ', dominiosBloqueados)
     return dominiosBloqueados
 }
@@ -52,8 +62,13 @@ function botonAgregadoRapido() {
     return document.querySelector('#agregar-rapido')
 }
 
-function listaDominios() {
-    return document.querySelector('#lista-dominios')
+
+function toggleSwitch() {
+    const element = document.querySelector('#toggle-switch')
+
+    element.setAttribute('checked', getToggle() === 1)
+
+    return element
 }
 
 async function enviarMensaje(accion, value = '') {
@@ -62,4 +77,12 @@ async function enviarMensaje(accion, value = '') {
     obj['dominio'] = value
 
     return await browser.runtime.sendMessage(obj);
+}
+
+
+function renderError(error) {
+    const element = document.querySelector('#error')
+
+    element.style.display = 'block'
+    element.innerHTML = error
 }
