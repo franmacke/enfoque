@@ -1,0 +1,19 @@
+body {
+    width: 484px;
+    height: 427px;
+}
+
+
+.titulo {
+    color: red;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+
+#lista-dominios {
+    flex: 1;
+    flex-direction: column;
+}
