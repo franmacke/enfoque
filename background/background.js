@@ -21,7 +21,7 @@ async function handleMensaje(message) {
         case 'POST':
             return agregarDominio(message.dominio)
         case 'DELETE':
-            return
+            return borrarDominio(message.dominio)
         case 'TOGGLE':
             return toggleEnfoque()
         case 'STATE':
@@ -32,11 +32,14 @@ async function handleMensaje(message) {
 }
 
 function toggleEnfoque() {
+    console.log("Estado actual: ", getToggle())
     if (getToggle() === DEFAULT_SWITCH) {
-        localStorage.setItem(KEY_TOGGLE, ON_SWITCH)
+        localStorage.setItem(KEY_TOGGLE, ON_SWITCH.toString())
     } else {
-        localStorage.setItem(KEY_TOGGLE, DEFAULT_SWITCH)
+        localStorage.setItem(KEY_TOGGLE, DEFAULT_SWITCH.toString())
     }
+    console.log("Nuevoo estado: ", getToggle())
+
     return getToggle()
 }
 
@@ -55,7 +58,7 @@ function getDominiosBloqueados() {
 
 
 function getToggle() {
-    let toggle = localStorage.getItem(KEY_TOGGLE)
+    let toggle = Number(localStorage.getItem(KEY_TOGGLE))
     if (toggle === null) {
         return DEFAULT_SWITCH
     }
@@ -67,6 +70,21 @@ function agregarDominio(dominio) {
 
     if (!lista.includes(dominio)) {
         lista.push(dominio)
+    } else {
+        throw Error('Ya esta en la lista')
+    }
+
+    localStorage.setItem(KEY_DOMINIOS_BLOQUEADOS, JSON.stringify(lista))
+
+    return lista
+}
+
+function borrarDominio(dominio) {
+    let lista = getDominiosBloqueados()
+
+    if (lista.includes(dominio)) {
+        lista.delete(dominio)
+        lista = lista.map(dominio => dominio != undefined)
     } else {
         throw Error('Ya esta en la lista')
     }

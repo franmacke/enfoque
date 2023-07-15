@@ -1,13 +1,13 @@
+
 const KEY_DOMINIOS_BLOQUEADOS = 'dominiosBloqueados'
 const DEBUG = true
-var estado = false
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     let agregadoRapido = botonAgregadoRapido()
     agregadoRapido.addEventListener('click', handleAgregadoRapido)
 
 
-    let toggle = toggleSwitch()
+    let toggle = await toggleSwitch()
     toggle.addEventListener('click', handleToggleSwitch)
 
     renderListaDominios()
@@ -15,7 +15,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function handleToggleSwitch() {
     const estado = await enviarMensaje('TOGGLE')
-    console.log('nuevo estado: ', estado)
     return estado
 }
 
@@ -25,7 +24,6 @@ async function getToggle() {
 
 async function handleAgregadoRapido() {
     addDominiosBloqueados(await getPestaniaActiva())
-        .catch()
     await renderListaDominios()
 }
 
@@ -63,11 +61,9 @@ function botonAgregadoRapido() {
 }
 
 
-function toggleSwitch() {
+async function toggleSwitch() {
     const element = document.querySelector('#toggle-switch')
-
-    element.setAttribute('checked', getToggle() === 1)
-
+    element.checked = await getToggle() === 1
     return element
 }
 
@@ -85,4 +81,20 @@ function renderError(error) {
 
     element.style.display = 'block'
     element.innerHTML = error
+}
+
+
+function listItem (dominio) {
+
+    return ` 
+    <div> 
+        <h3>
+            ${dominio} 
+        </h3>
+
+        <button>
+            x
+        </button>
+    </div>
+    `
 }
