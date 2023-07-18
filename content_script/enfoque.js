@@ -14,7 +14,7 @@ async function getPestaniaActiva() {
 }
 
 async function verificarBloqueado() {
-    if (await enviarMensaje("STATE") !== ON_SWITCH )
+    if (await enviarMensaje("STATE") !== ON_SWITCH)
         return
 
     const pestania = await getPestaniaActiva()
@@ -49,8 +49,18 @@ function bloquearPagina() {
 function pantallaBloqueo() {
 
     return `
-        <div class='pantalla-bloqueo'>
-            <h1>DEJA DE BOLUDEAR Y PONETE A LABURAR</h1>
-        </div>
+        <body style="background-color: #f2f2f2; color: #333333; font-family: Arial, sans-serif; margin: 0; padding: 0;">
+            <div style="display: flex; align-items: center; justify-content: center; height: 100vh;">
+                <h1 style="font-size: 24px; text-align: center; max-width: 400px;">¡Estás en medio de una sesión de estudio! No puedes usar esta página.</h1>
+            </div>
+            <style>
+                @media (prefers-color-scheme: dark) {
+                    body {
+                        background-color: #333333 !important;
+                        color: #f2f2f2 !important;
+                    }
+                }
+            </style>
+        </body>
     `
 }

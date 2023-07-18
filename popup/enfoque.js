@@ -1,6 +1,8 @@
 import Controller from "../controller/controller.mjs"
 
 var controller = new Controller()
+const ON_SWITCH = 1
+
 
 document.addEventListener('DOMContentLoaded', async () => {
     let agregadoRapido = botonAgregadoRapido()
@@ -14,10 +16,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 async function handleToggleSwitch() {
     const state = await controller.toggleSwitch()
-
-    if (state === ON_SWITCH) {
-        await controller.recargarPagina()
-    }
 }
 
 async function getToggle() {
@@ -27,6 +25,7 @@ async function getToggle() {
 async function handleAgregadoRapido() {
     controller.addDominiosBloqueados()
         .then(async (lista) => await renderListaDominios(lista))
+        .then(() => controller.recargarPagina())
         .catch(error => renderError(error))
 }
 
@@ -41,7 +40,7 @@ async function renderListaDominios(lista = []) {
     lista.forEach(item => {
         const elemento = listItem(item)
         contenedor.appendChild(elemento)
-    })    
+    })
 
     contenedorLista.innerHTML = ""
     contenedorLista.appendChild(contenedor)

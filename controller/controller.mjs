@@ -42,4 +42,8 @@ export default class Controller {
 
         return await browser.runtime.sendMessage(obj);
     }
+
+    async recargarPagina() {
+        browser.tabs.reload()
+    }
 }
