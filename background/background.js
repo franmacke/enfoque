@@ -1,6 +1,6 @@
 const KEY_DOMINIOS_BLOQUEADOS = 'dominiosBloqueados'
 const KEY_TOGGLE = 'toggleEnfoque'
-const DEBUG = true
+const DEBUG = false
 const DEFAULT_SWITCH = 0
 const ON_SWITCH = 1
 
@@ -67,20 +67,20 @@ function getToggle() {
 function agregarDominio(dominio) {
     let lista = getDominiosBloqueados()
     let currentID = 0
-    
+
     if (Object.keys(lista).length > 0) {
         currentID = Object.keys(lista).length;
     }
 
     if (lista.find(item => item.dominio === dominio)) {
-        throw Error('Ya esta en la lista') 
+        throw Error('Ya esta en la lista')
     }
 
     lista.push({
         id: currentID,
         dominio: dominio
     })
-    
+
     return guardarLista(lista)
 }
 
@@ -101,7 +101,7 @@ function guardarLista(lista) {
 }
 
 function guardarToggle(nuevoToggle) {
-    if (typeof nuevoToggle != "number" ) throw Error("El toggle tiene que ser un numero")
+    if (typeof nuevoToggle != "number") throw Error("El toggle tiene que ser un numero")
 
     localStorage.setItem(KEY_TOGGLE, nuevoToggle.toString())
     return nuevoToggle
