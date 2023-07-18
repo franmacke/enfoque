@@ -21,7 +21,7 @@ async function handleMensaje(message) {
         case 'POST':
             return agregarDominio(message.dominio)
         case 'DELETE':
-            return borrarDominio(message.dominio)
+            return borrarDominio(message.id)
         case 'TOGGLE':
             return toggleEnfoque()
         case 'STATE':
@@ -32,13 +32,13 @@ async function handleMensaje(message) {
 }
 
 function toggleEnfoque() {
-    console.log("Estado actual: ", getToggle())
+    // console.log("Estado actual: ", getToggle())
     if (getToggle() === DEFAULT_SWITCH) {
-        localStorage.setItem(KEY_TOGGLE, ON_SWITCH.toString())
+        this.guardarToggle(ON_SWITCH)
     } else {
-        localStorage.setItem(KEY_TOGGLE, DEFAULT_SWITCH.toString())
+        this.guardarToggle(DEFAULT_SWITCH)
     }
-    console.log("Nuevoo estado: ", getToggle())
+    // console.log("Nuevo estado: ", getToggle())
 
     return getToggle()
 }
@@ -47,9 +47,8 @@ function toggleEnfoque() {
 function getDominiosBloqueados() {
     let listaDominios = localStorage.getItem(KEY_DOMINIOS_BLOQUEADOS)
 
-
     if (listaDominios === null) {
-        localStorage.setItem(KEY_DOMINIOS_BLOQUEADOS, JSON.stringify([]))
+        this.guardarLista([])
         listaDominios = JSON.stringify([])
     }
 
@@ -67,29 +66,43 @@ function getToggle() {
 
 function agregarDominio(dominio) {
     let lista = getDominiosBloqueados()
-
-    if (!lista.includes(dominio)) {
-        lista.push(dominio)
-    } else {
-        throw Error('Ya esta en la lista')
+    let currentID = 0
+    
+    if (Object.keys(lista).length > 0) {
+        currentID = Object.keys(lista).length;
     }
 
-    localStorage.setItem(KEY_DOMINIOS_BLOQUEADOS, JSON.stringify(lista))
+    if (lista.find(item => item.dominio === dominio)) {
+        throw Error('Ya esta en la lista') 
+    }
 
+    lista.push({
+        id: currentID,
+        dominio: dominio
+    })
+    
+    return guardarLista(lista)
+}
+
+function borrarDominio(id) {
+    let lista = getDominiosBloqueados()
+    let index = lista.findIndex((item) => item.id === id)
+
+    if (!index) throw Error('Algo salio mal')
+
+    lista.splice(index, 1)
+
+    return guardarLista(lista)
+}
+
+function guardarLista(lista) {
+    localStorage.setItem(KEY_DOMINIOS_BLOQUEADOS, JSON.stringify(lista))
     return lista
 }
 
-function borrarDominio(dominio) {
-    let lista = getDominiosBloqueados()
+function guardarToggle(nuevoToggle) {
+    if (typeof nuevoToggle != "number" ) throw Error("El toggle tiene que ser un numero")
 
-    if (lista.includes(dominio)) {
-        lista.delete(dominio)
-        lista = lista.map(dominio => dominio != undefined)
-    } else {
-        throw Error('Ya esta en la lista')
-    }
-
-    localStorage.setItem(KEY_DOMINIOS_BLOQUEADOS, JSON.stringify(lista))
-
-    return lista
+    localStorage.setItem(KEY_TOGGLE, nuevoToggle.toString())
+    return nuevoToggle
 }

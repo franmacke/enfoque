@@ -1,14 +1,10 @@
 import Controller from "../controller/controller.mjs"
 
-const KEY_DOMINIOS_BLOQUEADOS = 'dominiosBloqueados'
-const DEBUG = true
-
 var controller = new Controller()
 
 document.addEventListener('DOMContentLoaded', async () => {
     let agregadoRapido = botonAgregadoRapido()
     agregadoRapido.addEventListener('click', handleAgregadoRapido)
-
 
     let toggle = await toggleSwitch()
     toggle.addEventListener('click', handleToggleSwitch)
@@ -17,7 +13,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 })
 
 async function handleToggleSwitch() {
-    return await controller.toggleSwitch()
+    const state = await controller.toggleSwitch()
+
+    if (state === ON_SWITCH) {
+        await controller.recargarPagina()
+    }
 }
 
 async function getToggle() {
@@ -26,16 +26,25 @@ async function getToggle() {
 
 async function handleAgregadoRapido() {
     controller.addDominiosBloqueados()
-        .then(async () => await renderListaDominios())
+        .then(async (lista) => await renderListaDominios(lista))
         .catch(error => renderError(error))
 }
 
-async function renderListaDominios() {
-    let lista = await controller.getDominiosBloqueados()
-    let listaHTML = lista.map(dominio => { return `<h3> ${dominio} </h3>` }).join('')
+async function renderListaDominios(lista = []) {
+    if (lista.length === 0) {
+        lista = await controller.getDominiosBloqueados()
+    }
 
-    const elemento = document.querySelector('#lista-dominios')
-    elemento.innerHTML = listaHTML
+    const contenedorLista = document.querySelector('#lista-dominios')
+    const contenedor = document.createElement("div")
+
+    lista.forEach(item => {
+        const elemento = listItem(item)
+        contenedor.appendChild(elemento)
+    })    
+
+    contenedorLista.innerHTML = ""
+    contenedorLista.appendChild(contenedor)
 }
 
 function botonAgregadoRapido() {
@@ -48,7 +57,6 @@ async function toggleSwitch() {
     return element
 }
 
-
 function renderError(error) {
     const element = document.querySelector('#error')
 
@@ -56,17 +64,24 @@ function renderError(error) {
     element.innerHTML = error
 }
 
-function listItem(dominio) {
+async function handleBorrarDominio(item) {
+    await controller.deleteDominio(item)
+    await renderListaDominios()
+}
 
-    return ` 
-    <div> 
-        <h3>
-            ${dominio} 
-        </h3>
+function listItem(item) {
+    const container = document.createElement("div")
+    const nombreDominio = document.createElement("h3")
+    const botonEliminar = document.createElement("button")
 
-        <button>
-            x
-        </button>
-    </div>
-    `
+    nombreDominio.innerHTML = item.dominio
+    botonEliminar.innerHTML = "x"
+    container.setAttribute("id", item.id)
+
+    botonEliminar.addEventListener("click", () => handleBorrarDominio(item))
+
+    container.appendChild(nombreDominio)
+    container.appendChild(botonEliminar)
+
+    return container
 }

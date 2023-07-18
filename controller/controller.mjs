@@ -1,7 +1,4 @@
 export default class Controller {
-    testeo() {
-        console.log('Funciona')
-    }
 
     async toggleSwitch() {
         const estado = await this.enviarMensaje('TOGGLE')
@@ -21,6 +18,11 @@ export default class Controller {
 
     async getDominiosBloqueados() {
         const response = await this.enviarMensaje('GET')
+        return response
+    }
+
+    async deleteDominio(item) {
+        const response = await this.enviarMensaje("DELETE", item)
         return response
     }
 

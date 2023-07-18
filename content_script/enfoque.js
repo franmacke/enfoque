@@ -1,5 +1,7 @@
 console.log('Content Script Loaded')
 
+const ON_SWITCH = 1
+
 if (document.readyState != "loading") {
     verificarBloqueado()
 } else {
@@ -12,10 +14,13 @@ async function getPestaniaActiva() {
 }
 
 async function verificarBloqueado() {
+    if (await enviarMensaje("STATE") !== ON_SWITCH )
+        return
+
     const pestania = await getPestaniaActiva()
     const dominiosBloqueados = await getDominiosBloqueados()
 
-    if (dominiosBloqueados.includes(pestania)) {
+    if (dominiosBloqueados.find(item => item.dominio === pestania)) {
         console.log('Bloqueado')
         bloquearPagina()
     } else {
@@ -25,8 +30,6 @@ async function verificarBloqueado() {
 
 async function getDominiosBloqueados() {
     const dominiosBloqueados = await enviarMensaje('GET')
-
-    console.log(dominiosBloqueados)
     return dominiosBloqueados
 }
 
