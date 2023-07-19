@@ -42,8 +42,17 @@ body {
 
 .btn-placement {
   position: absolute;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
   bottom: 5px;
   right: 5px;
+  width: 95%;
+}
+
+.img {
+  height: 30px;
 }
 
 .btn {

@@ -1,12 +1,12 @@
 {
   "manifest_version": 2,
   "name": "Enfoque",
-  "version": "1.0",
+  "version": "1.0.1",
 
-  "description": "Adds a red border to all webpages matching mozilla.org.",
+  "description": "Con Enfoque, podes seleccionar sitios web que te distraigan para poder deshabilitarlos y no distraerte mientras este activo.",
 
   "icons": {
-    "48": "icons/focus.png"
+    "512": "icons/focus.png"
   },
 
   "content_scripts": [
