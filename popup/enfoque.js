@@ -39,10 +39,16 @@ async function renderListaDominios(lista = []) {
     const contenedorLista = document.querySelector('#lista-dominios')
     const contenedor = document.createElement("div")
 
-    lista.forEach(item => {
-        const elemento = listItem(item)
+
+    if (Object.keys(lista).length !== 0) {
+        lista.forEach(item => {
+            const elemento = listItem(item)
+            contenedor.appendChild(elemento)
+        })
+    } else {
+        const elemento = emptyListItem()
         contenedor.appendChild(elemento)
-    })
+    }
 
     contenedorLista.innerHTML = ""
     contenedorLista.appendChild(contenedor)
@@ -97,6 +103,19 @@ function listItem(item) {
 
     container.appendChild(nombreDominio)
     container.appendChild(botonEliminar)
+
+    return container
+}
+
+
+function emptyListItem() {
+    const container = document.createElement("div")
+    const nombreDominio = document.createElement("h3")
+
+    nombreDominio.innerHTML = 'Todavia no agregaste nada'
+    nombreDominio.setAttribute('class', 'item-dominio')
+
+    container.appendChild(nombreDominio)
 
     return container
 }
