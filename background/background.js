@@ -14,6 +14,16 @@ if (DEBUG) {
 
 browser.runtime.onMessage.addListener(handleMensaje)
 
+const extensionURL = browser.runtime.getURL('/');
+
+// Extraer el dominio de la URL
+const url = new URL(extensionURL);
+const dominioExtension = url.hostname;
+
+console.log("Dominio de la extensión:", dominioExtension);
+
+
+
 async function handleMensaje(message) {
     switch (message.accion) {
         case 'GET':

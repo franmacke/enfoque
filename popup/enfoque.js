@@ -2,14 +2,25 @@ import Controller from "../controller/controller.mjs"
 
 var controller = new Controller()
 const ON_SWITCH = 1
-
+const SERVER_URL = 'http://127.0.0.1:8000/api/'
 
 document.addEventListener('DOMContentLoaded', async () => {
+
+
     let agregadoRapido = botonAgregadoRapido()
     agregadoRapido.addEventListener('click', handleAgregadoRapido)
 
     let toggle = await toggleSwitch()
     toggle.addEventListener('click', handleToggleSwitch)
+
+    let feedback = document.querySelector("#send-feedback")
+    feedback.addEventListener('click', handleSendFeedback)
+
+    let feedbackButton = document.querySelector('#feedback-btn')
+    feedbackButton.addEventListener('click', handleOpenFeedback)
+
+    let feedbackCloseButton = document.querySelector('#feedback-close-btn')
+    feedbackCloseButton.addEventListener('click', handleCloseFeedback)
 
     renderListaDominios()
 })
@@ -29,6 +40,15 @@ async function handleAgregadoRapido() {
             if (await getToggle() == ON_SWITCH) controller.recargarPagina()
         })
         .catch(error => renderError(error))
+}
+
+function handleOpenFeedback() {
+    console.log('Abierto')
+    document.querySelector('#feedback').style.display = 'flex'
+}
+
+function handleCloseFeedback() {
+    document.querySelector('#feedback').style.display = 'none'
 }
 
 async function renderListaDominios(lista = []) {
@@ -78,6 +98,11 @@ function closeError() {
     element.style.display = 'none'
 }
 
+function closeSuccess() {
+    const element = document.querySelector('#success-noti')
+    element.style.display = 'none'
+}
+
 async function handleBorrarDominio(item) {
     await controller.deleteDominio(item)
     await renderListaDominios()
@@ -118,4 +143,44 @@ function emptyListItem() {
     container.appendChild(nombreDominio)
 
     return container
+}
+
+async function handleSendFeedback() {
+    let input = document.querySelector('#feedback-text')
+
+    if (input.value.length === 0) return
+
+    const body = {
+        commentText: input.value,
+        date: formatDateToYYYYMMDD(new Date())
+    }
+
+    const response = await fetch(SERVER_URL + 'comments/',
+        {
+            method: 'POST',
+            body: JSON.stringify(body),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(() => handleCloseFeedback())
+        .then(() => renderSuccess('El feedback se mando con exito'))
+        .catch(err => renderError("Hubo un error al mandar el feedback"))
+}
+
+function renderSuccess(texto) {
+    const element = document.querySelector('#success-noti')
+
+    element.style.display = 'flex'
+    element.getElementsByClassName('success__title')[0].innerHTML = texto
+
+    setTimeout(closeSuccess, 3000)
+}
+
+function formatDateToYYYYMMDD(date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Los meses van de 0 a 11, por eso se suma 1
+    const day = String(date.getDate()).padStart(2, '0');
+
+    return `${year}-${month}-${day}`;
 }

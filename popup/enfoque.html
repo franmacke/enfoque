@@ -4,9 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="enfoque.css" rel="stylesheet" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
     <script type="module" src="enfoque.js"></script>
   </head>
   <body>
@@ -14,33 +17,123 @@
       <h1 class="titulo">Enfoque</h1>
       <!-- <input type="checkbox" id="toggle-switch"></div> -->
       <label class="container">
-        <input type="checkbox" id="toggle-switch">
+        <input type="checkbox" id="toggle-switch" />
         <svg viewBox="0 0 64 64" height="1.4em" width="1.4em">
-          <path d="M 0 16 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 16 L 32 48 L 64 16 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 16" pathLength="575.0541381835938" class="path"></path>
+          <path
+            d="M 0 16 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 16 L 32 48 L 64 16 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 16"
+            pathLength="575.0541381835938"
+            class="path"
+          ></path>
         </svg>
       </label>
     </header>
     <div id="error" class="error">
       <div class="error__icon">
-          <svg fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="m13 13h-2v-6h2zm0 4h-2v-2h2zm-1-15c-1.3132 0-2.61358.25866-3.82683.7612-1.21326.50255-2.31565 1.23915-3.24424 2.16773-1.87536 1.87537-2.92893 4.41891-2.92893 7.07107 0 2.6522 1.05357 5.1957 2.92893 7.0711.92859.9286 2.03098 1.6651 3.24424 2.1677 1.21325.5025 2.51363.7612 3.82683.7612 2.6522 0 5.1957-1.0536 7.0711-2.9289 1.8753-1.8754 2.9289-4.4189 2.9289-7.0711 0-1.3132-.2587-2.61358-.7612-3.82683-.5026-1.21326-1.2391-2.31565-2.1677-3.24424-.9286-.92858-2.031-1.66518-3.2443-2.16773-1.2132-.50254-2.5136-.7612-3.8268-.7612z" fill="#393a37"></path></svg>
+        <svg
+          fill="none"
+          height="24"
+          viewBox="0 0 24 24"
+          width="24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="m13 13h-2v-6h2zm0 4h-2v-2h2zm-1-15c-1.3132 0-2.61358.25866-3.82683.7612-1.21326.50255-2.31565 1.23915-3.24424 2.16773-1.87536 1.87537-2.92893 4.41891-2.92893 7.07107 0 2.6522 1.05357 5.1957 2.92893 7.0711.92859.9286 2.03098 1.6651 3.24424 2.1677 1.21325.5025 2.51363.7612 3.82683.7612 2.6522 0 5.1957-1.0536 7.0711-2.9289 1.8753-1.8754 2.9289-4.4189 2.9289-7.0711 0-1.3132-.2587-2.61358-.7612-3.82683-.5026-1.21326-1.2391-2.31565-2.1677-3.24424-.9286-.92858-2.031-1.66518-3.2443-2.16773-1.2132-.50254-2.5136-.7612-3.8268-.7612z"
+            fill="#393a37"
+          ></path>
+        </svg>
       </div>
       <div class="error__title">lorem ipsum dolor sit amet</div>
-   </div>
+    </div>
+    <div id="success-noti" class="notifications-container">
+      <div class="success">
+        <div class="flex">
+          <div class="flex-shrink-0">
+            <svg
+              class="succes-svg"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+          </div>
+          <div class="success-prompt-wrap">
+            <p class="success-prompt-heading">Exito</p>
+            <div class="success-prompt-prompt">
+              <p class="success__title"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <div class="lista">
-      <h3 class="list-title">Lista</h1>
-      <div id="lista-dominios"></div>
+      <h3 class="list-title">Lista</h3>
+      <div id="lista-dominios" class="lista-style"></div>
     </div>
     <div class="btn-placement">
-      <div>
+      <div class="bottom-buttons">
         <a href="https://github.com/franmacke/enfoque">
-          <img src="../icons/github-mark-white.png" alt="GitHub Logo" class="img">
+          <img
+            src="../icons/github-mark-white.png"
+            alt="GitHub Logo"
+            class="img"
+          />
         </a>
-        <a href='https://cafecito.app/franmacke' rel='noopener' target='_blank'>
-          <img class="img" srcset='https://cdn.cafecito.app/imgs/buttons/button_1.png 1x, https://cdn.cafecito.app/imgs/buttons/button_1_2x.png 2x, https://cdn.cafecito.app/imgs/buttons/button_1_3.75x.png 3.75x' src='https://cdn.cafecito.app/imgs/buttons/button_1.png' alt='Invitame un café en cafecito.app' />
+        <a href="https://cafecito.app/franmacke" rel="noopener" target="_blank">
+          <img
+            class="img"
+            srcset="
+              https://cdn.cafecito.app/imgs/buttons/button_1.png       1x,
+              https://cdn.cafecito.app/imgs/buttons/button_1_2x.png    2x,
+              https://cdn.cafecito.app/imgs/buttons/button_1_3.75x.png 3.75x
+            "
+            src="https://cdn.cafecito.app/imgs/buttons/button_1.png"
+            alt="Invitame un café en cafecito.app"
+          />
         </a>
+        <div id="feedback-btn" class="feedback-btn">
+          <img src="/icons/feedback.png" class="img-feedback" />
+        </div>
       </div>
       <button class="btn" id="agregar-rapido">Agregar este sitio</button>
     </div>
+
+    <div id="feedback" class="lista feedback-input">
+      <h3 class="list-title">Feedback</h3>
+      <div class="lista-style">
+        <span class="texto">Decime cualquier cosa!</span>
+        <div id="feedback-close-btn" class="close-feedback">
+          <img src="/icons/close.png" class="close-feedback-img" alt="close" />
+        </div>
+        <textarea
+          name="input_feedback"
+          id="feedback-text"
+          cols="30"
+          rows="5"
+        ></textarea>
+      </div>
+      <button class="btn" id="send-feedback">Mandar feedback</button>
+    </div>
+
+    <!-- <div id="feedback" class="feedback-input">
+      <div id="feedback-close-btn" class="close-feedback">
+        <img src="/icons/close.png" class="close-feedback-img" alt="close" />
+      </div>
+      <h3 class="list-title">Feedback</h3>
+      <span class="texto">Decime cualquier cosa!</span>
+      <textarea
+        name="input_feedback"
+        id="feedback-text"
+        cols="30"
+        rows="5"
+      ></textarea>
+      <button class="btn" id="send-feedback">Mandar feedback</button>
+    </div> -->
   </body>
 </html>
