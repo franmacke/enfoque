@@ -1,0 +1,9 @@
+
+
+const sendFeedback = () => {
+
+
+}
+
+
+export { sendFeedback }
